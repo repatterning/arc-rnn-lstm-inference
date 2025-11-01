@@ -59,8 +59,11 @@ class Setup:
         directories = src.functions.directories.Directories()
         directories.cleanup(path=self.__configurations.warehouse)
 
-        # The warehouse
-        return directories.create(path=self.__configurations.warehouse)
+        states = []
+        for path in [self.__configurations.points_, self.__configurations.menu_]:
+            states.append(directories.create(path=path))
+
+        return all(states)
 
     def exc(self) -> bool:
         """
