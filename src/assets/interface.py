@@ -1,6 +1,4 @@
 """Module interface.py"""
-import logging
-
 import pandas as pd
 
 import src.assets.cases
@@ -31,12 +29,6 @@ class Interface:
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__arguments = arguments
 
-        # Logging
-        logging.basicConfig(level=logging.INFO,
-                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d\n',
-                            datefmt='%Y-%m-%d %H:%M:%S')
-        self.__logger = logging.getLogger(__name__)
-
     def exc(self) -> list[sc.Specification]:
         """
 
@@ -57,6 +49,5 @@ class Interface:
 
         # Specifications
         specifications: list[sc.Specification] = src.assets.specifications.Specifications().exc(reference=reference)
-        self.__logger.info(specifications)
 
         return specifications
