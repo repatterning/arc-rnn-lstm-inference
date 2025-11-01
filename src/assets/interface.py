@@ -1,0 +1,62 @@
+"""Module interface.py"""
+import logging
+
+import pandas as pd
+
+import src.assets.cases
+import src.assets.filtering
+import src.assets.menu
+import src.assets.reference
+import src.assets.specifications
+import src.elements.s3_parameters as s3p
+import src.elements.service as sr
+import src.elements.specification as sc
+
+
+class Interface:
+    """
+    Interface
+    """
+
+    def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, arguments: dict):
+        """
+
+        :param service:
+        :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
+                              settings of this project, e.g., region code name, buckets, etc.
+        :param arguments:
+        """
+
+        self.__service: sr.Service = service
+        self.__s3_parameters: s3p.S3Parameters = s3_parameters
+        self.__arguments = arguments
+
+        # Logging
+        logging.basicConfig(level=logging.INFO,
+                            format='\n\n%(message)s\n%(asctime)s.%(msecs)03d\n',
+                            datefmt='%Y-%m-%d %H:%M:%S')
+        self.__logger = logging.getLogger(__name__)
+
+    def exc(self) -> list[sc.Specification]:
+        """
+
+        :return:
+        """
+
+        # Cases
+        cases = src.assets.cases.Cases(service=self.__service, s3_parameters=self.__s3_parameters).exc()
+        cases = src.assets.filtering.Filtering(cases=cases.copy(), arguments=self.__arguments).exc()
+
+        # Reference
+        reference: pd.DataFrame = src.assets.reference.Reference(
+            s3_parameters=self.__s3_parameters).exc(codes=cases['ts_id'].unique())
+        reference = reference.copy().merge(cases, how='left', on=['catchment_id', 'ts_id'])
+
+        # Menu
+        src.assets.menu.Menu().exc(reference=reference)
+
+        # Specifications
+        specifications: list[sc.Specification] = src.assets.specifications.Specifications().exc(reference=reference)
+        self.__logger.info(specifications)
+
+        return specifications
