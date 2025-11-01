@@ -10,7 +10,6 @@ import tensorflow as tf
 
 
 def main():
-
     """
     Entry Point
 
