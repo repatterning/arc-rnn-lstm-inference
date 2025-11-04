@@ -9,6 +9,7 @@ import src.assets.specifications
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.elements.specification as sc
+import src.assets.artefacts
 
 
 class Interface:
@@ -49,5 +50,8 @@ class Interface:
 
         # Specifications
         specifications: list[sc.Specification] = src.assets.specifications.Specifications().exc(reference=reference)
+
+        # Unload model artefacts
+        src.assets.artefacts.Artefacts(s3_parameters=self.__s3_parameters).exc(specifications=specifications)
 
         return specifications
