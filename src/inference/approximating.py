@@ -1,3 +1,4 @@
+"""Module approximating.py"""
 import logging
 import os
 
@@ -8,6 +9,9 @@ import src.elements.specification as sc
 
 
 class Approximating:
+    """
+    Under Development
+    """
 
     def __init__(self, arguments: dict):
         """
