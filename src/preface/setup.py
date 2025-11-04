@@ -30,8 +30,9 @@ class Setup:
         self.__service: sr.Service = service
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
 
-        # Configurations
+        # Instances
         self.__configurations = config.Config()
+        self.__directories = src.functions.directories.Directories()
 
     def __s3(self) -> bool:
         """
@@ -49,19 +50,28 @@ class Setup:
 
         return bucket.create()
 
+    def __data(self) -> bool:
+        """
+
+        :return:
+        """
+
+        self.__directories.cleanup(path=self.__configurations.data_)
+
+        return self.__directories.create(path=self.__configurations.data_)
+
     def __local(self) -> bool:
         """
 
         :return:
         """
 
-        # An instance for interacting with local directories
-        directories = src.functions.directories.Directories()
-        directories.cleanup(path=self.__configurations.warehouse)
+        # Resetting
+        self.__directories.cleanup(path=self.__configurations.warehouse)
 
         states = []
         for path in [self.__configurations.points_, self.__configurations.menu_]:
-            states.append(directories.create(path=path))
+            states.append(self.__directories.create(path=path))
 
         return all(states)
 
@@ -71,7 +81,7 @@ class Setup:
         :return:
         """
 
-        if self.__s3() & self.__local():
+        if self.__s3() & self.__local() & self.__data():
             return True
 
         sys.exit('Error: Set up failure')
