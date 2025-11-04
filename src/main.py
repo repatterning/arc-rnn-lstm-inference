@@ -26,7 +26,7 @@ def main():
     limits = src.limits.Limits(arguments=arguments).exc()
 
     # Hence
-    src.inference.interface.Interface(connector=connector, limits=limits).exc(specifications=specifications)
+    src.inference.interface.Interface(connector=connector, arguments=arguments, limits=limits).exc(specifications=specifications)
 
     # Deleting __pycache__
     src.functions.cache.Cache().exc()
