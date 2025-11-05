@@ -1,4 +1,4 @@
-
+"""Module estimate.py"""
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -10,6 +10,9 @@ import src.inference.sequencing
 
 
 class Estimate:
+    """
+    Estimate vis-a-vis known values
+    """
 
     def __init__(self, attribute: atr.Attribute):
         """
