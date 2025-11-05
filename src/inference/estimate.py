@@ -12,6 +12,10 @@ import src.inference.sequencing
 class Estimate:
 
     def __init__(self, attribute: atr.Attribute):
+        """
+
+        :param attribute:
+        """
 
         self.__attribute = attribute
 
@@ -55,13 +59,18 @@ class Estimate:
         return frame.rename(columns=self.__rename, inplace=True)
 
     def exc(self, model: tf.keras.models.Sequential, master: mr.Master, ):
+        """
+
+        :param model:
+        :param master:
+        :return:
+        """
 
         x_matrix, _ = src.inference.sequencing.Sequencing(
             modelling=self.__attribute.modelling).exc(blob=master.transforms)
 
         # Predict
         predictions: np.ndarray = model.predict(x=x_matrix)
-
 
         # Reconfiguring
         frame = self.__reconfigure(design=master.transforms, predictions=predictions)
