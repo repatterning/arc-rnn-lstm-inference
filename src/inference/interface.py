@@ -10,6 +10,7 @@ import src.elements.specification as sc
 import src.inference.attributes
 import src.inference.data
 import src.inference.scaling
+import src.inference.approximating
 
 
 class Interface:
@@ -66,6 +67,7 @@ class Interface:
 
         __get_attributes = dask.delayed(src.inference.attributes.Attributes(arguments=self.__arguments).exc)
         __get_data = dask.delayed(src.inference.data.Data().exc)
+        __approximating = dask.delayed(src.inference.approximating.Approximating().exc)
 
         computations = []
         for specification in specifications:
@@ -73,7 +75,8 @@ class Interface:
             listing: list[str] = self.__get_listing(specification=specification)
             data: pd.DataFrame = __get_data(listing=listing, modelling=attribute.modelling)
             master: mr.Master = self.__set_transforms(data=data, scaling=attribute.scaling)
-            computations.append(master.transforms.head())
+            app = __approximating(specification=specification, attribute=attribute, master=master)
+            computations.append(app)
 
         calculations = dask.compute(computations, scheduler='threads')[0]
         logging.info(calculations)
