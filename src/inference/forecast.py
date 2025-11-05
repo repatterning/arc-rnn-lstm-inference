@@ -5,6 +5,7 @@ import tensorflow as tf
 
 import src.elements.attribute as atr
 import src.elements.master as mr
+import src.inference.scaling
 
 
 class Forecast:
@@ -26,6 +27,9 @@ class Forecast:
         # ...
         self.__n_points_future = self.__arguments.get('n_points_future')
         self.__n_sequence = self.__modelling.get('n_sequence')
+
+        # Renaming
+        self.__rename = { arg: f'e_{arg}' for arg in self.__modelling.get('targets')}
 
     def __get_structure(self, frame: pd.DataFrame) -> pd.DataFrame:
         """
@@ -61,6 +65,19 @@ class Forecast:
 
         return template.copy()
 
+    def __reconfigure(self, data: pd.DataFrame):
+        """
+
+        :param data:
+        :return:
+        """
+
+        frame = src.inference.scaling.Scaling().inverse_transform(
+            data=data, scaling=self.__scaling)
+
+        return frame.rename(columns=self.__rename, inplace=True)
+
+
     def exc(self, model: tf.keras.models.Sequential, master: mr.Master):
         """
 
@@ -78,3 +95,6 @@ class Forecast:
 
         # Forecasting
         __future = self.__forecasting(model=model, past=past, f_structure=f_structure)
+        future = self.__reconfigure(data=__future.copy())
+
+        return future
