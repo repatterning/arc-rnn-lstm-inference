@@ -47,7 +47,14 @@ class Forecast:
 
         return future
 
-    def __forecasting(self, model: tf.keras.models.Sequential, past: pd.DataFrame, f_structure: pd.DataFrame):
+    def __forecasting(self, model: tf.keras.models.Sequential, past: pd.DataFrame, f_structure: pd.DataFrame) -> pd.DataFrame:
+        """
+
+        :param model:
+        :param past:
+        :param f_structure:
+        :return:
+        """
 
         # History
         initial = past[self.__modelling.get('fields')].values[None, :]
@@ -65,7 +72,7 @@ class Forecast:
 
         return template.copy()
 
-    def __reconfigure(self, data: pd.DataFrame):
+    def __reconfigure(self, data: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param data:
@@ -77,8 +84,7 @@ class Forecast:
 
         return frame.rename(columns=self.__rename, inplace=True)
 
-
-    def exc(self, model: tf.keras.models.Sequential, master: mr.Master):
+    def exc(self, model: tf.keras.models.Sequential, master: mr.Master) -> pd.DataFrame:
         """
 
         :param model:
