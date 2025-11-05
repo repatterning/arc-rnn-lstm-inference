@@ -64,7 +64,7 @@ class Interface:
         :return:
         """
 
-        __get_attributes = dask.delayed(src.inference.attributes.Attributes().exc)
+        __get_attributes = dask.delayed(src.inference.attributes.Attributes(arguments=self.__arguments).exc)
         __get_data = dask.delayed(src.inference.data.Data().exc)
 
         computations = []
