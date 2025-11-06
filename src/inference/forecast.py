@@ -5,6 +5,7 @@ import tensorflow as tf
 
 import src.elements.attribute as atr
 import src.elements.master as mr
+import src.elements.specification as sc
 import src.inference.scaling
 
 
@@ -89,11 +90,12 @@ class Forecast:
         return frame
 
     # pylint: disable=E1101
-    def exc(self, model: tf.keras.models.Sequential, master: mr.Master) -> pd.DataFrame:
+    def exc(self, model: tf.keras.models.Sequential, master: mr.Master, specification: sc.Specification) -> pd.DataFrame:
         """
 
         :param model:
         :param master:
+        :param specification
         :return:
         """
 
@@ -107,5 +109,6 @@ class Forecast:
         # Forecasting
         __future = self.__forecasting(model=model, past=past, structure=structure)
         future = self.__reconfigure(data=__future.copy())
+        future.loc[:, 'ts_id'] = specification.ts_id
 
         return future
