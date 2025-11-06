@@ -1,4 +1,5 @@
 """Module estimate.py"""
+
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -59,7 +60,7 @@ class Estimate:
         frame = src.inference.scaling.Scaling().inverse_transform(
             data=structure, scaling=self.__attribute.scaling)
 
-        return frame.rename(columns=self.__rename, inplace=True)
+        return frame.rename(columns=self.__rename)
 
     def exc(self, model: tf.keras.models.Sequential, master: mr.Master, ):
         """
