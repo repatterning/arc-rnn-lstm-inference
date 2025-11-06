@@ -11,6 +11,14 @@ class Persist:
 
     @staticmethod
     def exc(specification: sc.Specification, approximations: apr.Approximations) -> int:
+        """
+        * Add an absolute percentage error field to the `approximations.estimates` frame<br>
+        * Per `approximations` frame drop `date` & `ts_id`<br><br>
+
+        :param specification: <br>
+        :param approximations: <br>
+        :return:
+        """
 
         logging.info(approximations.forecasts)
         logging.info(approximations.estimates)
