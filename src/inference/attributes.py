@@ -1,5 +1,4 @@
 """Module inference/attributes.py"""
-import logging
 import os
 
 import config
@@ -42,15 +41,11 @@ class Attributes:
         :return:
         """
 
-        path = os.path.join(self.__configurations.data_, str(specification.catchment_id), str(specification.ts_id))
+        path = os.path.join(self.__configurations.data_, 'artefacts', str(specification.catchment_id), str(specification.ts_id))
 
         attribute = atr.Attribute(
             modelling=self.__get_request(uri=os.path.join(path, 'modelling.json')),
             scaling=self.__get_request(uri=os.path.join(path, 'scaling.json')),
             n_points_future=self.__arguments.get('n_points_future'))
-
-        logging.info(attribute.modelling)
-        logging.info(attribute.scaling)
-        logging.info(attribute.n_points_future)
 
         return attribute
