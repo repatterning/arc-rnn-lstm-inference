@@ -22,8 +22,9 @@ def main():
     logger.info('GPU: %s', tf.config.list_physical_devices('GPU'))
 
     # Assets
-    specifications = src.assets.interface.Interface(service=service, s3_parameters=s3_parameters, arguments=arguments).exc()
     limits = src.limits.Limits(arguments=arguments).exc()
+    specifications = src.assets.interface.Interface(
+        service=service, s3_parameters=s3_parameters, arguments=arguments).exc(limits=limits)
 
     # Hence
     src.inference.interface.Interface(arguments=arguments, limits=limits).exc(specifications=specifications)
