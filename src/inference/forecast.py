@@ -10,13 +10,13 @@ import src.inference.scaling
 
 class Forecast:
     """
-    Under Development
+    For forecasting vis-à-vis the future
     """
 
     def __init__(self, attribute: atr.Attribute):
         """
 
-        :param attribute:
+        :param attribute: Refer to src.elements.attribute.py
         """
 
         self.__modelling = attribute.modelling
