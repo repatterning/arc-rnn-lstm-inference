@@ -1,4 +1,4 @@
-
+"""Module source.py"""
 import logging
 import os
 
@@ -9,7 +9,11 @@ import src.elements.s3_parameters as s3p
 import src.elements.specification as sc
 import src.s3.directives
 
+
 class Source:
+    """
+    Source
+    """
 
     def __init__(self, s3_parameters: s3p.S3Parameters, arguments: dict, limits: list):
         """
