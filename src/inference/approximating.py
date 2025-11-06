@@ -1,5 +1,4 @@
 """Module approximating.py"""
-import logging
 import os
 
 import tensorflow as tf
@@ -28,7 +27,7 @@ class Approximating:
     def __get_model(self, specification: sc.Specification) -> tf.keras.models.Sequential:
         """
 
-        :param path:
+        :param specification:
         :return:
         """
 
@@ -52,7 +51,3 @@ class Approximating:
         # Subsequently, estimate w.r.t. to the known, and forecast w.r.t. the unknown.
         estimates = src.inference.estimate.Estimate(attribute=attribute).exc(model=model, master=master)
         forecasts = src.inference.forecast.Forecast(attribute=attribute).exc(model=model, master=master)
-        logging.info(estimates)
-        logging.info(forecasts)
-
-        return [estimates.shape[0], forecasts.shape[0]]
