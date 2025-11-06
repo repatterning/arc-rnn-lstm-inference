@@ -1,7 +1,6 @@
 import logging
 
-import pandas as pd
-
+import src.elements.approximations as apr
 import src.elements.specification as sc
 
 
@@ -11,8 +10,9 @@ class Persist:
         pass
 
     @staticmethod
-    def exc(specification: sc.Specification, approximations: pd.DataFrame) -> int:
+    def exc(specification: sc.Specification, approximations: apr.Approximations) -> int:
 
-        logging.info(approximations.tail())
+        logging.info(approximations.forecasts)
+        logging.info(approximations.estimates)
 
         return specification.ts_id
