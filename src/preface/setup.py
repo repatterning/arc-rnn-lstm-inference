@@ -81,7 +81,7 @@ class Setup:
         :return:
         """
 
-        if self.__s3() & self.__local() & self.__data():
+        if self.__s3() & self.__local(): # & self.__data():
             return True
 
         sys.exit('Error: Set up failure')
