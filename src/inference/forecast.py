@@ -38,12 +38,12 @@ class Forecast:
 
         dates = pd.date_range(start=frame['date'].max(), periods=self.__n_points_future+1, freq='h', inclusive='right')
         timestamps = (dates.astype(np.int64) / (10 ** 6)).astype(np.longlong)
-        future = pd.DataFrame(data={'timestamp': timestamps, 'date': dates})
+        structure = pd.DataFrame(data={'timestamp': timestamps, 'date': dates})
 
         for i in self.__modelling.get('targets'):
-            future.loc[:, i] = np.nan
+            structure.loc[:, i] = np.nan
 
-        return future
+        return structure
 
     # pylint: disable=E1101
     def __forecasting(self, model: tf.keras.models.Sequential, past: pd.DataFrame, f_structure: pd.DataFrame) -> pd.DataFrame:
