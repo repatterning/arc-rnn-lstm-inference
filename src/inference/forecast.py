@@ -46,12 +46,12 @@ class Forecast:
         return structure
 
     # pylint: disable=E1101
-    def __forecasting(self, model: tf.keras.models.Sequential, past: pd.DataFrame, f_structure: pd.DataFrame) -> pd.DataFrame:
+    def __forecasting(self, model: tf.keras.models.Sequential, past: pd.DataFrame, structure: pd.DataFrame) -> pd.DataFrame:
         """
 
         :param model:
         :param past:
-        :param f_structure:
+        :param structure:
         :return:
         """
 
@@ -60,7 +60,7 @@ class Forecast:
         history = initial.copy()
 
         # The forecasts template
-        template = f_structure.copy()
+        template = structure.copy()
 
         # Hence
         for i in range(self.__n_points_future):
@@ -102,10 +102,10 @@ class Forecast:
 
         # Predicting future values requires (a) past values, and (b) a structure for future values
         past = frame.copy()[-self.__n_sequence:]
-        f_structure = self.__get_structure(frame=frame)
+        structure = self.__get_structure(frame=frame)
 
         # Forecasting
-        __future = self.__forecasting(model=model, past=past, f_structure=f_structure)
+        __future = self.__forecasting(model=model, past=past, structure=structure)
         future = self.__reconfigure(data=__future.copy())
 
         return future
