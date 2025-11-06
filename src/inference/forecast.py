@@ -78,13 +78,13 @@ class Forecast:
         :return:
         """
 
-        structure = src.inference.scaling.Scaling().inverse_transform(
+        instances = src.inference.scaling.Scaling().inverse_transform(
             data=data, scaling=self.__scaling)
-        structure = structure.copy().rename(columns=self.__rename)
+        instances = instances.copy().rename(columns=self.__rename)
 
         frame = data.copy()
         frame = frame.copy().drop(columns=self.__modelling.get('targets'))
-        frame.loc[:, list(self.__rename.values())] = structure.values
+        frame.loc[:, list(self.__rename.values())] = instances.values
 
         return frame
 
