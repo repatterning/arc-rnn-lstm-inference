@@ -1,0 +1,65 @@
+
+import logging
+import os
+
+import dask
+
+import config
+import src.elements.s3_parameters as s3p
+import src.elements.specification as sc
+import src.s3.directives
+
+class Source:
+
+    def __init__(self, s3_parameters: s3p.S3Parameters, arguments: dict, limits: list):
+        """
+
+        :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
+                              name, buckets, etc.
+        :param arguments:
+        :param limits:
+        """
+
+        self.__s3_parameters = s3_parameters
+        self.__arguments = arguments
+        self.__limits = limits
+
+        # Endpoint
+        self.__endpoint: str = self.__arguments.get('additions').get('modelling_data_source')
+
+        # Instances
+        self.__configurations = config.Config()
+        self.__directives =  src.s3.directives.Directives()
+
+    @dask.delayed
+    def __acquire(self, specification: sc.Specification):
+        """
+
+        :param specification: Refer to src.elements.specification.py
+        :return:
+        """
+
+        keys = [f'{self.__endpoint}/{specification.catchment_id}/{specification.ts_id}/{limit}.csv'
+                   for limit in self.__limits ]
+        target = os.path.join(self.__configurations.data_, 'source', str(specification.catchment_id), str(specification.ts_id))
+
+        status = []
+        for key in keys:
+            status.append(self.__directives.unload_(key=key, target=target))
+
+        return sum(status)
+
+    def exc(self, specifications: list[sc.Specification]):
+        """
+
+        :param specifications: A list items of type Specification; refer to src.elements.specification.py
+        :return:
+        """
+
+        computations = []
+        for specification in specifications:
+            state = self.__acquire(specification=specification)
+            computations.append(state)
+
+        states = dask.compute(computations, scheduler='threads')[0]
+        logging.info(states)
