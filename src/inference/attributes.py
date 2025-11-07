@@ -41,7 +41,8 @@ class Attributes:
         :return:
         """
 
-        path = os.path.join(self.__configurations.data_, 'artefacts', str(specification.catchment_id), str(specification.ts_id))
+        path = os.path.join(
+            self.__configurations.data_, 'artefacts', str(specification.catchment_id), str(specification.ts_id))
 
         attribute = atr.Attribute(
             modelling=self.__get_request(uri=os.path.join(path, 'modelling.json')),
