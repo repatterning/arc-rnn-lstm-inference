@@ -29,8 +29,7 @@ class Specification(typing.NamedTuple):
         The y geographic coördinate.<br><br>
     <b>river_name</b>: str<br>
         the name of the river, or water, where the gauge resides; if applicable.<br><br>
-    <b>uri</b>: str<br>
-        The cloud path of the gauge's model artefacts.<br><br>
+
 
     """
 
@@ -45,4 +44,3 @@ class Specification(typing.NamedTuple):
     latitude: float
     longitude: float
     river_name: str
-    uri: str
