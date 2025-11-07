@@ -1,6 +1,7 @@
-import logging
+"""Module persist.py"""
 import json
 import os
+
 import pandas as pd
 
 import config
@@ -10,6 +11,9 @@ import src.functions.objects
 
 
 class Persist:
+    """
+    Persist
+    """
 
     def __init__(self):
         """
