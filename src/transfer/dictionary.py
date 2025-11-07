@@ -48,7 +48,7 @@ class Dictionary:
         :return:
         """
 
-        local['section'] = local['vertex'].apply(os.path.basename)
+        local['section'] = local['vertex'].apply(lambda x: os.path.basename(os.path.dirname(x)))
 
         return local
 
