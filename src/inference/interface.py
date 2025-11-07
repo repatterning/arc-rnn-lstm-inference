@@ -88,5 +88,5 @@ class Interface:
             message = __persist(specification=specification, approximations=approximations)
             computations.append(message)
 
-        messages = dask.compute(computations, scheduler='threads')[0]
+        messages = dask.compute(computations, scheduler='processes')[0]
         logging.info(messages)
