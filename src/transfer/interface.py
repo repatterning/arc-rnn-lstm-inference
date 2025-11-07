@@ -72,5 +72,3 @@ class Interface:
                 service=self.__service, bucket_name=self.__s3_parameters.external).exc(
                 strings=strings, tags={'project': self.__configurations.project_tag})
             logging.info(messages)
-
-
