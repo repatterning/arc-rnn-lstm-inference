@@ -29,7 +29,6 @@ class Artefacts:
         self.__directives =  src.s3.directives.Directives()
         self.__directories = src.functions.directories.Directories()
 
-    @dask.delayed
     def __acquire(self, specification: sc.Specification):
         """
 
@@ -53,10 +52,16 @@ class Artefacts:
         :return:
         """
 
-        computations = []
-        for specification in specifications:
-            state = self.__acquire(specification=specification)
-            computations.append(state)
+        # Either
+        # computations = []
+        # for specification in specifications:
+        #     state = self.__acquire(specification=specification)
+        #     computations.append(state)
 
+        # Or
+        computations = [dask.delayed(self.__acquire)(specification=specification)
+                        for specification in specifications]
+
+        # Compute
         states = dask.compute(computations, scheduler='threads')[0]
         logging.info(states)
