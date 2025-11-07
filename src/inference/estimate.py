@@ -62,6 +62,14 @@ class Estimate:
 
         return frame.rename(columns=self.__rename)
 
+    @staticmethod
+    def __error(instances: pd.DataFrame):
+
+        raw = (instances['measure'] - instances['e_measure']).to_numpy()
+        instances.loc[:, 'ape'] = 100 * np.absolute(np.true_divide(raw, instances['measure'].to_numpy()))
+
+        return instances
+
     def exc(self, model: tf.keras.models.Sequential, master: mr.Master):
         """
 
@@ -83,5 +91,8 @@ class Estimate:
         __original = master.data.copy()[-predictions.shape[0]:]
         instances = pd.concat([__original.copy().reset_index(drop=True), frame[list(self.__rename.values())]],
                               axis=1)
+
+        # Absolute percentage error
+        instances = self.__error(instances=instances.copy())
 
         return instances
