@@ -15,7 +15,7 @@ class Source:
     Source
     """
 
-    def __init__(self, s3_parameters: s3p.S3Parameters, arguments: dict, limits: list):
+    def __init__(self, arguments: dict, limits: list):
         """
 
         :param s3_parameters: The overarching S3 parameters settings of this project, e.g., region code
@@ -24,7 +24,6 @@ class Source:
         :param limits:
         """
 
-        self.__s3_parameters = s3_parameters
         self.__arguments = arguments
         self.__limits = limits
 
