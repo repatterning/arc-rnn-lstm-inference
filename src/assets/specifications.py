@@ -33,7 +33,10 @@ class Specifications:
         :return:
         """
 
-        dictionaries = [reference.iloc[i, :].squeeze() for i in range(reference.shape[0])]
+        frame = reference.copy().drop(columns='uri')
+
+
+        dictionaries = [frame.iloc[i, :].squeeze() for i in range(frame.shape[0])]
         specifications = [sc.Specification(**dictionary) for dictionary in dictionaries]
         specifications = [self.__anomalies(specification=specification)
                           for specification in specifications]
