@@ -28,6 +28,7 @@ def main():
 
     # Hence
     src.inference.interface.Interface(arguments=arguments, limits=limits).exc(specifications=specifications)
+    src.transfer.interface.Interface(connector=connector, service=service, s3_parameters=s3_parameters).exc()
 
     # Deleting __pycache__
     src.functions.cache.Cache().exc()
