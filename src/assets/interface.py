@@ -4,18 +4,18 @@ import sys
 
 import pandas as pd
 
+import src.assets.artefacts
 import src.assets.cases
 import src.assets.filtering
+import src.assets.foci
 import src.assets.menu
 import src.assets.reference
+import src.assets.source
 import src.assets.specifications
 import src.elements.s3_parameters as s3p
 import src.elements.service as sr
 import src.elements.specification as sc
 import src.functions.cache
-import src.assets.artefacts
-import src.assets.source
-import src.assets.foci
 
 
 class Interface:
