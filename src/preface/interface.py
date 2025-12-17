@@ -1,6 +1,6 @@
 """Module interface.py"""
-import typing
 import argparse
+import typing
 
 import boto3
 
