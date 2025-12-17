@@ -60,7 +60,6 @@ class Interface:
         strings: pd.DataFrame = src.transfer.dictionary.Dictionary().exc(
             path=self.__configurations.pathway_, extension='*',
             prefix=self.__configurations.prefix + '/')
-        logging.info(strings)
 
         # Transfer
         if strings.empty:
