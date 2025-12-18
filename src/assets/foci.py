@@ -88,7 +88,6 @@ class Foci:
 
         if warnings.empty:
             logging.info('No warnings')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
+            return pd.DataFrame()
 
         return warnings[['catchment_id', 'ts_id']].drop_duplicates()
