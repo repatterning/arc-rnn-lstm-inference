@@ -1,5 +1,6 @@
 """Module inference/interface.py"""
 import logging
+import multiprocessing
 
 import dask
 import pandas as pd
@@ -32,6 +33,7 @@ class Interface:
 
         # Setting up
         self.__scaling = src.inference.scaling.Scaling()
+        self.__n_cores = multiprocessing.cpu_count()
 
     @dask.delayed
     def __set_transforms(self, data: pd.DataFrame, scaling: dict) -> mr.Master:
@@ -68,5 +70,5 @@ class Interface:
             message = __persist(specification=specification, approximations=approximations)
             computations.append(message)
 
-        messages = dask.compute(computations, scheduler='processes')[0]
+        messages = dask.compute(computations, scheduler='processes', num_workers=int(0.5*self.__n_cores))[0]
         logging.info(messages)
