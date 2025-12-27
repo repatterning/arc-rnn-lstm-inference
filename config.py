@@ -22,12 +22,14 @@ class Config:
         """
 
         '''
-        Keys
+        Keys:
+          The metadata prefix/path is in relation to a cloud configurations bucket.
         '''
         self.architecture = 'arc-rnn-lstm'
         self.s3_parameters_key = 's3_parameters.yaml'
         self.arguments_key = f'architectures/{self.architecture}/arguments.json'
-        
+        self.metadata_ = 'architectures/arc-rnn-lstm/inference/external'
+
 
         '''
         Project Metadata
@@ -45,9 +47,3 @@ class Config:
         self.pathway_ = os.path.join(self.warehouse, 'arc-rnn-lstm-inference')
         self.points_ = os.path.join(self.pathway_, 'points')
         self.menu_ = os.path.join(self.pathway_, 'menu')
-
-
-        '''
-        Cloud Prefix: Metadata [vis-à-vis Configurations Bucket]
-        '''
-        self.metadata_ = 'architectures/arc-rnn-lstm/inference/external'
