@@ -1,6 +1,5 @@
 """Module filtering.py"""
 import logging
-
 import sys
 
 import numpy as np
@@ -46,6 +45,10 @@ class Filtering:
         return self.__cases
 
     def __service(self):
+        """
+
+        :return:
+        """
 
         excerpt = self.__arguments.get('series').get('excerpt')
         if excerpt is None:
