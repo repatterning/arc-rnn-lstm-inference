@@ -42,7 +42,7 @@ class Interface:
         :return:
         """
 
-        # gauge stations identifiers vis-à-vis existing model artefacts
+        # the identification codes of gauge stations vis-à-vis existing model artefacts
         cases = src.assets.cases.Cases(
             service=self.__service, s3_parameters=self.__s3_parameters, arguments=self.__arguments).exc()
 
@@ -52,6 +52,11 @@ class Interface:
         # filter in relation to context - live, on demand via input argument, inspecting inference per model
         instances = src.assets.filtering.Filtering(
             cases=cases.copy(), foci=foci.copy(), arguments=self.__arguments).exc()
+
+        if instances.empty:
+            logging.info('Nothing to do.  Is your inference request in relation to one or more existing models?')
+            src.functions.cache.Cache().exc()
+            sys.exit(0)
 
         return instances
 
@@ -63,10 +68,6 @@ class Interface:
         """
 
         instances = self.__get_instances()
-        if instances.empty:
-            logging.info('Nothing to do.  Is your inference request in relation to one or more existing models?')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
 
         # Reference
         reference: pd.DataFrame = src.assets.reference.Reference(
