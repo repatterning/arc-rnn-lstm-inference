@@ -1,13 +1,9 @@
 """Module interface.py"""
 import logging
-import sys
 
 import pandas as pd
 
 import src.assets.artefacts
-import src.assets.cases
-import src.assets.filtering
-import src.assets.foci
 import src.assets.menu
 import src.assets.reference
 import src.assets.source
@@ -36,30 +32,6 @@ class Interface:
         self.__s3_parameters: s3p.S3Parameters = s3_parameters
         self.__arguments = arguments
 
-    def __get_metadata(self) -> pd.DataFrame:
-        """
-
-        :return:
-        """
-
-        # the identification codes of gauge stations vis-à-vis existing model artefacts
-        cases = src.assets.cases.Cases(
-            service=self.__service, s3_parameters=self.__s3_parameters, arguments=self.__arguments).exc()
-
-        # gauge stations identifiers vis-à-vis warning period
-        foci = src.assets.foci.Foci(s3_parameters=self.__s3_parameters).exc()
-
-        # filter in relation to context - live, on demand via input argument, inspecting inference per model
-        metadata = src.assets.filtering.Filtering(
-            cases=cases.copy(), foci=foci.copy(), arguments=self.__arguments).exc()
-
-        if metadata.empty:
-            logging.info('Nothing to do.  Is your inference request in relation to one or more existing models?')
-            src.functions.cache.Cache().exc()
-            sys.exit(0)
-
-        return metadata
-
     def exc(self, limits: list) -> list[sc.Specification]:
         """
 
@@ -68,7 +40,7 @@ class Interface:
         """
 
         # The gauge stations in focus
-        metadata = self.__get_metadata()
+        metadata = ...
 
         # Reference
         reference: pd.DataFrame = src.assets.reference.Reference(
