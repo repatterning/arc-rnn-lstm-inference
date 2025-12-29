@@ -24,8 +24,8 @@ class Interface:
     def __init__(self, arguments: dict, limits: list):
         """
 
-        :param arguments:
-        :param limits:
+        :param arguments: A set of arguments vis-à-vis computation & storage objectives.<br>
+        :param limits: The list of data-files-dates in focus.
         """
 
         self.__arguments = arguments

@@ -82,7 +82,7 @@ class Cases:
         else:
             return pd.DataFrame()
 
-        # The variable objects is a list of uniform resource locators.  Each locator includes a 'ts_id',
+        # The variable `objects` is a list of uniform resource locators.  Each locator includes a 'ts_id',
         # 'catchment_id', 'datestr' substring; the function __get_elements extracts these items.
         values = self.__get_elements(objects=objects)
 
