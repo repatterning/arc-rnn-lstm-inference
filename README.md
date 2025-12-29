@@ -13,7 +13,7 @@ develop<br>
 
 **Inference**
 
-Via an applicable infrastructure set-up, e.g., via an Amazon Web Services EC2 (Elastic Compute Cloud) machine with <abbr title="Compute Unified Device Architecture">CUDA</abbr> graphics processing units:
+Via an applicable infrastructure set-up, e.g., via an Amazon Web Services EC2 (Elastic Compute Cloud) machine with <abbr title="Compute Unified Device Architecture">CUDA</abbr>[^1] graphics processing units:
 
 ```shell
 docker pull ghcr.io/repatterning/arc-rnn-lstm-inference:master
@@ -38,6 +38,11 @@ wherein
 
 <br>
 <br>
+
+<br>
+<br>
+
+[^1]: Compute Unified Device Architecture
 
 <br>
 <br>
