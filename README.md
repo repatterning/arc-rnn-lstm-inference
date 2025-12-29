@@ -42,7 +42,7 @@ wherein
 <br>
 <br>
 
-[^1]: Compute Unified Device Architecture
+[^1]: <a href="https://spawn-queue.acm.org/doi/10.1145/1365490.1365500" target="_blank">Compute Unified Device Architecture</a>
 
 <br>
 <br>
