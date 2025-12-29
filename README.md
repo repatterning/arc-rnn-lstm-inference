@@ -9,10 +9,11 @@ develop<br>
 
 
 <br>
+<br>
 
 **Inference**
 
-Within an applicable infrastructure set-up:
+Via an applicable infrastructure set-up, e.g., via an Amazon Web Services EC2 (Elastic Compute Cloud) machine with <abbr title="Compute Unified Device Architecture">CUDA</abbr> graphics processing units:
 
 ```shell
 docker pull ghcr.io/repatterning/arc-rnn-lstm-inference:master
@@ -26,6 +27,8 @@ wherein
 
 * --codes: A comma-separated list of gauge-station-time-series identification codes
 * --request: $\in {0, 1, 2, 3}$ &Rarr; $0$ inspection, $1$ latest models live, $2$ on-demand inference service, $3$ warning period inference
+
+**and** (a) relevant authentication & authorisation settings must be in-place, (b) storage areas must be set-up & accessible.
 
 <br>
 <br>
