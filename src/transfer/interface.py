@@ -52,6 +52,22 @@ class Interface:
 
         return frame
 
+    def __transfer(self, strings: pd.DataFrame):
+        """
+
+        :param strings:
+        :return:
+        """
+
+        if self.__arguments.get('request') in {0, 3}:
+            src.transfer.cloud.Cloud(
+                service=self.__service, s3_parameters=self.__s3_parameters, arguments=self.__arguments).exc()
+
+        messages = src.s3.ingress.Ingress(
+            service=self.__service, bucket_name=self.__s3_parameters.external).exc(
+            strings=strings, tags={'project': self.__configurations.project_tag})
+        logging.info(messages)
+
     def exc(self):
         """
 
@@ -63,15 +79,12 @@ class Interface:
             path=self.__configurations.pathway_, extension='*',
             prefix=self.__arguments.get('prefix').get('destination') + '/')
 
-        # Transfer
         if strings.empty:
-            logging.info('Empty')
-        else:
-            strings = self.__get_metadata(frame=strings.copy())
-            logging.info(strings)
-            src.transfer.cloud.Cloud(
-                service=self.__service, s3_parameters=self.__s3_parameters, arguments=self.__arguments).exc()
-            messages = src.s3.ingress.Ingress(
-                service=self.__service, bucket_name=self.__s3_parameters.external).exc(
-                strings=strings, tags={'project': self.__configurations.project_tag})
-            logging.info(messages)
+            logging.info('There are no inference artefacts to transfer.')
+            return None
+
+        # Transfer
+        strings = self.__get_metadata(frame=strings.copy())
+        logging.info(strings)
+
+        self.__transfer(strings=strings)
