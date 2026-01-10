@@ -1,5 +1,8 @@
 """Module data.py"""
+
+import logging
 import os
+import glob
 
 import dask.dataframe as ddf
 import numpy as np
@@ -55,9 +58,16 @@ class Data:
         :return:
         """
 
+        listing = glob.glob(
+            pathname=os.path.join(self.__configurations.data_, 'source', str(specification.catchment_id),
+                                  str(specification.ts_id), '*.csv'))
+        logging.info(listing)
+
+        '''
         listing  = [os.path.join(self.__configurations.data_, 'source', str(specification.catchment_id),
                                  str(specification.ts_id), f'{limit}.csv' )
                     for limit in self.__limits]
+        '''
 
         return listing
 
