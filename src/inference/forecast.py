@@ -68,31 +68,16 @@ class Forecast:
 
         # History
         initial = past[self.__modelling.get('fields')].values[None, :]
-        history = initial.copy()
 
         # The forecasts template
         template = structure.copy()
 
         # Temporary
-        X = initial.copy()
+        history = initial.copy()
         for _ in range(self.__n_points_future):
-            value = model(X[:, -self.__n_sequence:, :])
-            X = np.concatenate((X, [[[float(value.numpy().squeeze())]]]), axis=1)
-        print(X[:, -self.__n_points_future:, :].squeeze())
-        template.loc[:, self.__modelling.get('targets')] = X[:, -self.__n_points_future:, :].squeeze()
-
-        # Hence
-        '''
-        for i in range(self.__n_points_future):
-            values = model.predict(x=history[:, -self.__n_sequence:, :], verbose=0)
-            print(values)
-            template.loc[i, self.__modelling.get('targets')] = values
-            affix = template.loc[i, self.__modelling.get('fields')].values.astype(float)
-            history = np.concatenate((history, affix[None, None, :]), axis=1)
-        '''
-
-        print(template)
-        print(template.shape)
+            value = model(history[:, -self.__n_sequence:, :])
+            history = np.concatenate((history, [[[float(value.numpy().squeeze())]]]), axis=1)
+        template.loc[:, self.__modelling.get('targets')] = history[:, -self.__n_points_future:, :].squeeze()
 
         return template.copy()
 
