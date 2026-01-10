@@ -17,9 +17,10 @@ class Cases:
     def __init__(self, service: sr.Service, s3_parameters: s3p.S3Parameters, arguments: dict):
         """
 
-        :param service:
-        :param s3_parameters:
-        :param arguments:
+        :param service: A suite of services for interacting with Amazon Web Services.<br>
+        :param s3_parameters: The overarching S3 (Simple Storage Service) parameters
+                              settings of this project, e.g., region code name, buckets, etc.<br>
+        :param arguments: A set of arguments vis-à-vis computation & storage objectives.<br>
         """
 
         self.__service = service
