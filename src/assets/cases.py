@@ -1,4 +1,5 @@
 """Module cases.py"""
+import logging
 import os
 
 import numpy as np
@@ -77,6 +78,7 @@ class Cases:
         """
 
         keys = self.__get_keys()
+        logging.info('KEYS: %s', keys)
         if len(keys) > 0:
             objects = [f's3://{self.__s3_parameters.internal}/{key}' for key in keys]
         else:
