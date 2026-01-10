@@ -28,7 +28,7 @@ def main():
 
     # Inference
     src.inference.interface.Interface(
-        arguments=arguments, limits=limits).exc(specifications=specifications)
+        arguments=arguments).exc(specifications=specifications)
 
     # Transfer
     src.transfer.interface.Interface(
