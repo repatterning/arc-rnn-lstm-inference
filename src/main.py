@@ -86,4 +86,7 @@ if __name__ == '__main__':
     else:
         tf.config.set_visible_devices(gpu[0], 'GPU')
 
+    # https://blog.tensorflow.org/2023/11/whats-new-in-tensorflow-2-15.html
+    os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
     main()
