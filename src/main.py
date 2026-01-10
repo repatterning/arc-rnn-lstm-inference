@@ -65,7 +65,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--codes', type=specific.codes,
                         help='Expects a string of one or more comma separated gauge time series codes.')
-    parser.add_argument('--request', type=specific.request,
+    parser.add_argument('--request', type=specific.request, default=0,
                         help=('Expects an integer; 0 inspection, 1 latest models live, '
                               '2 on-demand inference service, 3 warning period inference.'))
     args: argparse.Namespace = parser.parse_args()
