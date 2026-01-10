@@ -41,15 +41,25 @@ class Source:
         :return:
         """
 
+        parts = [ f"--include \'{limit}*\'" for limit in self.__limits]
+        extra = '--recursive ' + "--exclude \'*\' " + ' '.join(parts)
+        key = f'{self.__endpoint}/{specification.catchment_id}/{specification.ts_id}/'
+        target = os.path.join(self.__configurations.data_, 'source', str(specification.catchment_id), str(specification.ts_id))
+        status = self.__directives.unload_(key=key, target=target, extra=extra)
+
+
+        '''
         keys = [f'{self.__endpoint}/{specification.catchment_id}/{specification.ts_id}/{limit}.csv'
                    for limit in self.__limits ]
         target = os.path.join(self.__configurations.data_, 'source', str(specification.catchment_id), str(specification.ts_id))
-
         status = []
         for key in keys:
             status.append(self.__directives.unload_(key=key, target=target))
 
         return sum(status)
+        '''
+
+        return status
 
     def exc(self, specifications: list[sc.Specification]):
         """
